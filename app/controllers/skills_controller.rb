@@ -19,14 +19,21 @@ class SkillsController
     puts "=============="
     puts "#{skill.name}"
     puts skill.description.nil? ? "Enter 'describe' to add a description." : skill.description
+    puts "Enter describe or master to continue."
     puts "=============="
     command = clean_gets
     case command
     when "describe"
       describe(skill)
     when "master"
-      "master placeholder"
+      puts "Would you like to become a master in this skill (y/n)"
+      master(skill)
     end
+  end
+
+  def master(skill)
+    choice = clean_gets
+    skill.set_mastery(choice)
   end
 
   def describe(skill)
@@ -39,7 +46,9 @@ class SkillsController
     puts "#{@origin_training_path.name.upcase} SKILLS"
     puts "=============="
     @origin_training_path.skills.each_with_index do |skill, index|
-      puts "#{index + 1}. #{skill.name}"
+      output = "#{index + 1}. #{skill.name}"
+      output << " \u2713" if skill.mastered == 'true'
+      puts output
     end
     Router.navigate_skills_menu(self)
   end

@@ -1,6 +1,6 @@
 class Skill
   include Comparable
-  attr_reader :description, :errors, :id, :name
+  attr_reader :errors, :id, :name, :description
 
   def initialize(options)
     @errors = nil
@@ -31,6 +31,11 @@ class Skill
     skill = Skill.new(options)
     skill.save
     skill
+  end
+
+  def set_description(description)
+    @description = description
+    Environment.database.execute("UPDATE skills SET description='#{@description}' WHERE id=#{@id}")
   end
 
   def self.last

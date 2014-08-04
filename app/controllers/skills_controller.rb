@@ -14,6 +14,26 @@ class SkillsController
     end
   end
 
+  def view(skill_number)
+    skill = @origin_training_path.skills[skill_number -1]
+    puts "=============="
+    puts "#{skill.name}"
+    puts skill.description.nil? ? "Enter 'describe' to add a description." : skill.description
+    puts "=============="
+    command = clean_gets
+    case command
+    when "describe"
+      describe(skill)
+    when "master"
+      "master placeholder"
+    end
+  end
+
+  def describe(skill)
+    description = clean_gets
+    skill.set_description(description)
+  end
+
   def list
     puts "=============="
     puts "#{@origin_training_path.name.upcase} SKILLS"
